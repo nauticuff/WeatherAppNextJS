@@ -10,7 +10,7 @@ interface MapboxFeature {
 function AddressAutofill() {
   const [address, setAddress] = useState('');
   const [suggestions, setSuggestions] = useState<MapboxFeature[]>([]);
-  const [activeOptionIndex, setActiveOptionIndex] = useState(-1);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(0);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
