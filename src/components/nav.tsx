@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
-import AddressAutofill from '@/pages/autofill';
+import PlacesAutocompleteContainer from './PlacesAutocomplete';
 
 const nav = () => {
   return (
@@ -12,7 +12,8 @@ const nav = () => {
             alt='partly cloudy site logo'
         >
         </Image>
-        <AddressAutofill />
+        {/* <AddressAutofill /> */}
+        <PlacesAutocompleteContainer />
     </nav>
   );
 }
