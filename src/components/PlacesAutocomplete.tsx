@@ -8,15 +8,20 @@ const apiKey = process.env.API_KEY || '';
 const PlacesAutocomplete: React.FC = () => {
   const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
-  const [coord, setCoord] = useState([0, 0])
+  const [coord, setCoord] = useState([0, 0]);
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false); // Add a loading state
 
   const handlePlaceSelect = async () => {
     if (autocomplete !== null) {
       const place = autocomplete.getPlace();
       if (place.geometry && place.geometry.location) {
-        setCoord([place.geometry.location.lat(), place.geometry.location.lng()])
-        const data = await getWeather(place.geometry.location.lat(), place.geometry.location.lng(), Intl.DateTimeFormat().resolvedOptions().timeZone)
-        console.log(data)
+        setCoord([place.geometry.location.lat(), place.geometry.location.lng()]);
+        const data = await getWeather(
+          place.geometry.location.lat(),
+          place.geometry.location.lng(),
+          Intl.DateTimeFormat().resolvedOptions().timeZone
+        );
+        console.log(data);
       }
     }
   };
@@ -26,11 +31,17 @@ const PlacesAutocomplete: React.FC = () => {
     libraries,
   });
 
+  useEffect(() => {
+    if (isLoaded) {
+      setIsScriptLoaded(true);
+    }
+  }, [isLoaded]);
+
   if (loadError) {
     return <div>Error loading maps</div>;
   }
 
-  if (!isLoaded) {
+  if (!isScriptLoaded) { // Check if the script has finished loading
     return <div>Loading maps</div>;
   }
 
@@ -38,18 +49,19 @@ const PlacesAutocomplete: React.FC = () => {
     <div>
       <Autocomplete
         onLoad={(autoComplete) => setAutocomplete(autoComplete)}
-        onPlaceChanged={() => handlePlaceSelect()}
+        onPlaceChanged={handlePlaceSelect} // Remove unnecessary arrow function
       >
-        <input type="text" placeholder="Search for a location" className='w-[220px] overflow-hidden bg-[#3c70a1] p-1 text-white placeholder:text-gray-300 rounded-3xl text-center'/>
+        <input
+          type="text"
+          placeholder="Search for a location"
+          className="w-[220px] overflow-hidden bg-[#3c70a1] p-1 text-white placeholder:text-gray-300 rounded-3xl text-center"
+        />
       </Autocomplete>
-
     </div>
-    
   );
 };
 
 const PlacesAutocompleteContainer: React.FC = () => {
-
   const { isLoaded: isScriptLoaded, loadError: scriptLoadError } = useLoadScript({
     googleMapsApiKey: apiKey,
     libraries,
