@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image';
 import PlacesAutocompleteContainer from './PlacesAutocomplete';
 
-const nav = () => {
+const nav = (props: any) => {
+
   return (
     <nav className='flex justify-between items-center'>
         <Image
@@ -10,10 +11,11 @@ const nav = () => {
             height={100}
             width={100}
             alt='partly cloudy site logo'
+            className='cursor-pointer'
+            onClick={() => window.location.reload()}
         >
         </Image>
-        {/* <AddressAutofill /> */}
-        <PlacesAutocompleteContainer />
+        <PlacesAutocompleteContainer props={props}/>
     </nav>
   );
 }
