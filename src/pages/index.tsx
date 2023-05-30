@@ -1,10 +1,29 @@
 import { useState } from "react";
 import Nav from "@/components/nav";
 import CurrentWeather from "@/components/CurrentWeather";
-import ForecastWeather from "@/components/ForecastWeather";
+import HourlyWeather from "@/components/HourlyWeather";
+import DailyWeather from "@/components/DailyWeather";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/components/theme";
 import { StyledEngineProvider } from "@mui/material/styles";
+import CurrentButtons from "@/components/CurrentButtons";
+
+interface HourlyModel {
+  hour: string,
+  icon: number,
+  precip: number,
+  temp: number,
+  timestamp: number
+}
+
+interface DailyModel {
+  day: string,
+  icon: number,
+  high: number,
+  low: number,
+  sunrise: string,
+  sunset: string,
+}
 
 export default function Home() {
   const [currentWeather, setCurrentWeather] = useState({
@@ -22,18 +41,22 @@ export default function Home() {
     },
   });
 
-  const [forecastWeather, setForecastWeather] = useState({
-    forecast: [
-      { day: ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
-      { icon: ["01d", "02d", "03d", "09d", "01d", "13d"] },
-      { high: [65, 62, 70, 59, 60, 63] },
-      { low: [57, 55, 45, 49, 50, 52] },
-      {
-        description: ["Sunny", "Overcast", "Cloudy", "Rainy", "Sunny", "Snow"],
-      },
-      { precipitation: [0, 4, 25, 62, 2, 40] },
-    ],
-  });
+  const [hourlyWeather, setHourlyWeather] = useState<HourlyModel[]>([])
+
+  // const [dailyWeather, setDailyWeather] = useState(
+  //   [
+  //     { day: ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
+  //     { icon: [65, 62, 70, 59, 60, 63] },
+  //     { high: [65, 62, 70, 59, 60, 63] },
+  //     { low: [57, 55, 45, 49, 50, 52] },
+  //     {
+  //       sunrise: ["Sunny", "Overcast", "Cloudy", "Rainy", "Sunny", "Snow"],
+  //     },
+  //     { sunset: ["Sunny", "Overcast", "Cloudy", "Rainy", "Sunny", "Snow"] },
+  //   ]
+  // );
+
+  const [dailyWeather, setDailyWeather] = useState<DailyModel[]>([])
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,11 +65,16 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <Nav
               setCurrentWeather={setCurrentWeather}
-              setForecastWeather={setForecastWeather}
+              setHourlyWeather={setHourlyWeather}
+              setDailyWeather={setDailyWeather}
             />
             <div className="flex flex-col">
-              <CurrentWeather currentWeather={currentWeather} />
-              <ForecastWeather forecastWeather={forecastWeather} />
+              <div className="bg-[#386894] rounded-lg">
+                <CurrentWeather currentWeather={currentWeather} />
+                <CurrentButtons />
+                <HourlyWeather hourlyWeather={hourlyWeather}/>
+              </div>
+              <DailyWeather dailyWeather={dailyWeather} />
             </div>
           </div>
         </div>
