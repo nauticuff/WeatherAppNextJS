@@ -72,7 +72,7 @@ export default function Home() {
               <div className="bg-[#386894] rounded-lg px-6">
                 <CurrentWeather currentWeather={currentWeather} />
                 <CurrentButtons />
-                <hr className="mx-auto my-4 w-[934%]"/>
+                <hr className="mx-auto my-4 w-[96%]"/>
                 <HourlyWeather hourlyWeather={hourlyWeather}/>
               </div>
               <DailyWeather dailyWeather={dailyWeather} />
