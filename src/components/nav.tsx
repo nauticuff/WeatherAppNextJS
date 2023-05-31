@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import Image from 'next/image';
 import PlacesAutocompleteContainer from './PlacesAutocomplete';
+import Skeleton from '@mui/material/Skeleton';
 
 const nav = (props: any) => {
 
   return (
-    <nav className='flex justify-between items-center'>
+    <nav className='flex mb-6 justify-between items-center'>
+      <Suspense fallback={<Skeleton variant="circular" width={40} height={40} />}>
+
+      
         <Image
             src="https://cdn-icons-png.flaticon.com/512/4052/4052984.png"
-            height={100}
-            width={100}
+            height={50}
+            width={50}
             alt='partly cloudy site logo'
             className='cursor-pointer'
             onClick={() => window.location.reload()}
+            priority
         >
         </Image>
+        </Suspense>
         <PlacesAutocompleteContainer props={props}/>
     </nav>
   );

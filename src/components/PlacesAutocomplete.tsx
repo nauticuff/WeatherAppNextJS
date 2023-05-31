@@ -6,6 +6,8 @@ import {
 } from "@react-google-maps/api";
 import { getWeather } from "@/DataService/DataService";
 import { ObjectLiteralElement } from "typescript";
+import SearchIcon from '@mui/icons-material/Search';
+import Skeleton from '@mui/material/Skeleton';
 
 const libraries: (
   | "places"
@@ -91,38 +93,25 @@ const PlacesAutocomplete = (props: any) => {
   const parseHourlyWeather = ({ hourly, current_weather }: any) => {
     return hourly.time.map((time: number, index: number) => {
       return {
+        idx: index,
         timestamp: time * 1000,
-        //day: DAY_FORMATTER.format(daily.time[index * 1000]),
-        //high: daily.temperature_2m_max.map((temp: number) => {return Math.round(temp)}),
-        //low:  daily.temperature_2m_min.map((temp: number) => {return Math.round(temp)}),
         hour: HOUR_FORMATTER.format(time * 1000),
         temp: Math.round(hourly.temperature_2m[index]),
         precip: Math.round(hourly.precipitation[index] * 100) / 100,
         icon: hourly.weathercode[index]
       }
-    }).filter(({ timestamp }: any) => timestamp > current_weather.time * 1000)
+    }).filter(({ timestamp, idx }: any) => timestamp >= current_weather.time * 1000 && idx <= 36)
   };
 
   const parseDailyWeather = ({ daily }: any) => {
-    // const {
-    //   time: day,
-    //   weathercode: icon,
-    //   temperature_2m_max: dayMax,
-    //   temperature_2m_min: dayMin,
-    //   sunrise,
-    //   sunset
-    // } = daily
-
     return daily.time.map((dayUnix: number, index: number) => {
       return {
-        
         day: DAY_FORMATTER.format(dayUnix * 1000),
         icon: daily.weathercode[index],
         high: Math.round(daily.temperature_2m_max[index]),
         low: Math.round(daily.temperature_2m_min[index]),
         sunrise: HOUR_FORMATTER.format(daily.sunrise[index] * 1000),
         sunset: HOUR_FORMATTER.format(daily.sunset[index] * 1000)
-        
       } 
     })
   }
@@ -139,11 +128,11 @@ const PlacesAutocomplete = (props: any) => {
   }, [isLoaded]);
 
   if (loadError) {
-    return <div>Error loading maps</div>;
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
   }
 
   if (!isScriptLoaded) {
-    return <div>Loading maps</div>;
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
   }
 
   return (
@@ -154,8 +143,8 @@ const PlacesAutocomplete = (props: any) => {
       >
         <input
           type="text"
-          placeholder="Search for a location"
-          className="border-none w-[220px] focus:outline-dashed rounded-3xl px-3 text-center overflow-hidden bg-[#3c70a1] p-1 text-white placeholder:text-gray-300"
+          placeholder="enter location"
+          className="border-none w-44 focus:outline-dashed rounded-full px-3 text-center overflow-hidden bg-[#3c70a1] p-1 text-white placeholder:text-gray-300"
         />
       </Autocomplete>
     </div>
@@ -170,11 +159,11 @@ const PlacesAutocompleteContainer = (props: any) => {
     });
 
   if (scriptLoadError) {
-    return <div>Error loading Google Maps script</div>;
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
   }
 
   if (!isScriptLoaded) {
-    return <div>Loading Google Maps script</div>;
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
   }
 
   return <PlacesAutocomplete props={props} />;

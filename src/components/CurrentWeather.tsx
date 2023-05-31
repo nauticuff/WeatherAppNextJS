@@ -5,7 +5,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import HourlyWeather from "./HourlyWeather";
+import HourlyWeather from "./HourlyWeather/HourlyWeather";
 
 const CurrentWeather = (props: any) => {
   // const [isFavorited, setIsFavorited] = useState(false);
@@ -19,11 +19,11 @@ const CurrentWeather = (props: any) => {
   // };
 
   return (
-    <div className="p-3  text-center text-white">
+    <div className="my-10 text-center text-white">
       <div className="current-top">
         <p className="font-light">{props.currentWeather.current.name}</p>
         <h1 className="text-3xl">
-          {props.currentWeather.current.currentTemp} &deg;F
+          {props.currentWeather.current.currentTemp}&deg; F
         </h1>
         <p className="font-light">{props.currentWeather.current.description}</p>
         <p className="font-light">

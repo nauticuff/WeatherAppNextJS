@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Nav from "@/components/nav";
 import CurrentWeather from "@/components/CurrentWeather";
-import HourlyWeather from "@/components/HourlyWeather";
+import HourlyWeather from "@/components/HourlyWeather/HourlyWeather";
 import DailyWeather from "@/components/DailyWeather";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/components/theme";
@@ -69,9 +69,10 @@ export default function Home() {
               setDailyWeather={setDailyWeather}
             />
             <div className="flex flex-col">
-              <div className="bg-[#386894] rounded-lg">
+              <div className="bg-[#386894] rounded-lg px-6">
                 <CurrentWeather currentWeather={currentWeather} />
                 <CurrentButtons />
+                <hr className="mx-auto my-4 w-[934%]"/>
                 <HourlyWeather hourlyWeather={hourlyWeather}/>
               </div>
               <DailyWeather dailyWeather={dailyWeather} />

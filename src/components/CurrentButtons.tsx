@@ -18,11 +18,11 @@ const CurrentButtons = () => {
   };
 
   return (
-    <div className="flex justify-around text-white">
+    <div className="flex justify-center flex-wrap gap-4 col text-white sm:justify-around">
       <Button
         onClick={() => setIsFavorited(!isFavorited)}
         variant="contained"
-        className="w-[140px] bg-[#23405c] py-1 rounded-full text-inherit tracking-wider hover:bg-slate-200 hover:text-black"
+        className="w-[170px] bg-[#23405c] rounded-full text-inherit tracking-wider hover:bg-slate-200 hover:text-black"
       >
         <span className="px-1">{isFavorited ? "favorite" : "unfavorite"}</span>
         {isFavorited ? <StarBorderRoundedIcon /> : <StarRoundedIcon />}
@@ -34,7 +34,7 @@ const CurrentButtons = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         variant="contained"
-        className="bg-[#23405c] px-3 py-1 rounded-full tracking-wider hover:bg-slate-200 hover:text-black"
+        className="bg-[#23405c] rounded-full tracking-wider hover:bg-slate-200 hover:text-black"
       >
         <span className="px-2">Favorite List</span>
         <BookmarksOutlinedIcon fontSize="small" />
