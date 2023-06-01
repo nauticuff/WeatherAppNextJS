@@ -16,7 +16,7 @@ const getLocation = async (lat: number, lon: number, apiKey: string) => {
 
 const getRandomCoords = async () => {
     try {
-        const res = await fetch('http://api.3geonames.org/?randomland=yes&json=1')
+        const res = await fetch('https://api.3geonames.org/?randomland=yes&json=1')
         const data = await res.json();
         return data
     }
