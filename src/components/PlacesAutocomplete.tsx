@@ -4,10 +4,11 @@ import {
   Autocomplete,
   LoadScript,
 } from "@react-google-maps/api";
-import { getWeather, getLocation } from "@/DataService/DataService";
+import { getWeather, getLocation, getRandomCoords } from "@/DataService/DataService";
 import { ObjectLiteralElement } from "typescript";
 import SearchIcon from "@mui/icons-material/Search";
 import Skeleton from "@mui/material/Skeleton";
+import { Button } from "@mui/material";
 
 const libraries: (
   | "places"
@@ -49,7 +50,7 @@ const PlacesAutocomplete = (props: any) => {
       const place = autocomplete.getPlace();
       if (place.geometry && place.geometry.location) {
         //setCoord([place.geometry.location.lat(), place.geometry.location.lng()]);
-        const data = await getWeather(
+        const weatherData = await getWeather(
           place.geometry.location.lat(),
           place.geometry.location.lng(),
           Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -63,56 +64,76 @@ const PlacesAutocomplete = (props: any) => {
 
         const nearestLocation =
           locationData.results[0].components.city ||
+          locationData.results[0].components.town ||
+          locationData.results[0].components.village ||
+          locationData.results[0].components.hamlet ||
+          locationData.results[0].components.suburb ||
+          locationData.results[0].components.district ||
+          locationData.results[0].components.borough ||
+          locationData.results[0].components.township ||
+          locationData.results[0].components.neighbourhood ||
           locationData.results[0].components.county ||
           locationData.results[0].components.state ||
           locationData.results[0].components.country;
+
         
-          console.log(data)
-        const current = parseCurrentWeather(data);
-        const hourly = parseHourlyWeather(data);
-        const daily = parseDailyWeather(data);
+          console.log('Weather', weatherData)
+          //console.log('Geo', locationData)
+        const current = parseCurrentWeather(weatherData, locationData);
+        const hourly = parseHourlyWeather(weatherData);
+        const daily = parseDailyWeather(weatherData);
         //console.log(current)
-        //console.log(hourly);
-        console.log(daily);
+        //console.log('Hourly', hourly);
+        console.log('DailyWeather', daily);
 
         props.props.props.setCurrentWeather((prev: any) => ({
           ...prev,
-          current: {
-            ...prev.current,
-            ...current,
-            name: nearestLocation,
-            sunsetTime: daily[0].sunset
-          },
+          current
         }));
         
 
         props.props.props.setHourlyWeather(hourly);
 
-        //props.props.props.setDailyWeather(daily)
+        props.props.props.setDailyWeather(daily)
         //console.log(data)
       }
     }
   };
-
-  const parseCurrentWeather = ({ current_weather, daily, latitude, longitude }: any) => {
-    const { temperature: currentTemp } = current_weather;
+//current_weather, daily, latitude, longitude
+  const parseCurrentWeather = (weatherData: any, geoData: any) => {
+    const { temperature: currentTemp } = weatherData.current_weather;
 
     const {
       temperature_2m_max: [highTemp],
       temperature_2m_min: [lowTemp],
-    } = daily;
+    } = weatherData.daily;
+
+    const nearestLocation =
+    geoData.results[0].components.city ||
+    geoData.results[0].components.town ||
+    geoData.results[0].components.village ||
+    geoData.results[0].components.suburb ||
+    geoData.results[0].components.neighbourhood ||
+    geoData.results[0].components.district ||
+    geoData.results[0].components.borough ||
+    geoData.results[0].components.township ||
+    geoData.results[0].components.hamlet ||
+    geoData.results[0].components.county ||
+    geoData.results[0].components.state ||
+    geoData.results[0].components.country;
 
     return {
       currentTemp: Math.round(currentTemp),
       highTemp: Math.round(highTemp),
       lowTemp: Math.round(lowTemp),
-      lat: latitude,
-      lon: longitude,
-      icon: current_weather.weathercode
+      lat: weatherData.latitude,
+      lon: weatherData.longitude,
+      icon: weatherData.current_weather.weathercode,
+      name: nearestLocation
     };
   };
 
-  const parseHourlyWeather = ({ hourly, current_weather }: any) => {
+  const parseHourlyWeather = ({ daily, hourly, current_weather }: any) => {
     return hourly.time
       .map((time: number, index: number) => {
         return {
@@ -122,6 +143,8 @@ const PlacesAutocomplete = (props: any) => {
           temp: Math.round(hourly.temperature_2m[index]),
           precip: Math.round(hourly.precipitation[index] * 100) / 100,
           icon: hourly.weathercode[index],
+          sunrise: HOUR_FORMATTER.format(daily.sunrise[0] * 1000),
+          sunset: HOUR_FORMATTER.format(daily.sunset[0] * 1000),
         };
       })
       .filter(
@@ -137,8 +160,9 @@ const PlacesAutocomplete = (props: any) => {
         icon: daily.weathercode[index],
         high: Math.round(daily.temperature_2m_max[index]),
         low: Math.round(daily.temperature_2m_min[index]),
-        sunrise: HOUR_FORMATTER.format(daily.sunrise[index] * 1000),
-        sunset: HOUR_FORMATTER.format(daily.sunset[index] * 1000),
+        precip: Math.round(daily.precipitation_probability_max[index])
+        // sunrise: HOUR_FORMATTER.format(daily.sunrise[index] * 1000),
+        // sunset: HOUR_FORMATTER.format(daily.sunset[index] * 1000),
       };
     });
   };
@@ -148,10 +172,16 @@ const PlacesAutocomplete = (props: any) => {
     libraries,
   });
 
+  const getRnd = async () => {
+    const coords = await getRandomCoords()
+    console.log(coords)
+  }
+
   useEffect(() => {
     if (isLoaded) {
       setIsScriptLoaded(true);
     }
+    
   }, [isLoaded]);
 
   if (loadError) {
@@ -164,6 +194,7 @@ const PlacesAutocomplete = (props: any) => {
 
   return (
     <div>
+      <Button onClick={getRnd}>Fetch Coords</Button>
       <Autocomplete
         onLoad={(autoComplete) => setAutocomplete(autoComplete)}
         onPlaceChanged={handlePlaceSelect}

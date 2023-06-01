@@ -8,6 +8,16 @@ import theme from "@/components/theme";
 import { StyledEngineProvider } from "@mui/material/styles";
 import CurrentButtons from "@/components/CurrentButtons";
 
+interface CurrentModel {
+  currentTemp: number,
+  highTemp: number,
+  icon: number,
+  lat: number,
+  lon: number,
+  lowTemp: number,
+  name: string,
+}
+
 interface HourlyModel {
   hour: string,
   icon: number,
@@ -21,8 +31,7 @@ interface DailyModel {
   icon: number,
   high: number,
   low: number,
-  sunrise: string,
-  sunset: string,
+  precip: number
 }
 
 export default function Home() {
@@ -31,7 +40,6 @@ export default function Home() {
       description: "Sunny",
       icon: "04d",
       currentTemp: 75,
-      
       highTemp: 90,
       lowTemp: 55,
       name: "Stockton",
@@ -61,14 +69,14 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider>
-        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] py-8 px-6">
+        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] py-8 px-6 overflow-y-scroll">
           <div className="max-w-6xl mx-auto">
             <Nav
               setCurrentWeather={setCurrentWeather}
               setHourlyWeather={setHourlyWeather}
               setDailyWeather={setDailyWeather}
             />
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-6">
               <div className="bg-[#386894] rounded-lg px-6">
                 <CurrentWeather currentWeather={currentWeather} />
                 <CurrentButtons />
