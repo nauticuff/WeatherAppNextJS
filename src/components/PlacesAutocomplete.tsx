@@ -194,7 +194,7 @@ const PlacesAutocomplete = (props: any) => {
 
   return (
     <div>
-      <Button onClick={getRnd}>Fetch Coords</Button>
+      <Button className="bg-white hover:bg-gray-400" onClick={getRnd}>Fetch Coords</Button>
       <Autocomplete
         onLoad={(autoComplete) => setAutocomplete(autoComplete)}
         onPlaceChanged={handlePlaceSelect}
