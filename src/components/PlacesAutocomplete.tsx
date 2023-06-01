@@ -4,10 +4,10 @@ import {
   Autocomplete,
   LoadScript,
 } from "@react-google-maps/api";
-import { getWeather } from "@/DataService/DataService";
+import { getWeather, getLocation } from "@/DataService/DataService";
 import { ObjectLiteralElement } from "typescript";
-import SearchIcon from '@mui/icons-material/Search';
-import Skeleton from '@mui/material/Skeleton';
+import SearchIcon from "@mui/icons-material/Search";
+import Skeleton from "@mui/material/Skeleton";
 
 const libraries: (
   | "places"
@@ -55,6 +55,19 @@ const PlacesAutocomplete = (props: any) => {
           Intl.DateTimeFormat().resolvedOptions().timeZone
         );
 
+        const locationData = await getLocation(
+          place.geometry.location.lat(),
+          place.geometry.location.lng(),
+          geolocationApiKey
+        );
+
+        const nearestLocation =
+          locationData.results[0].components.city ||
+          locationData.results[0].components.county ||
+          locationData.results[0].components.state ||
+          locationData.results[0].components.country;
+        
+          console.log(data)
         const current = parseCurrentWeather(data);
         const hourly = parseHourlyWeather(data);
         const daily = parseDailyWeather(data);
@@ -64,8 +77,14 @@ const PlacesAutocomplete = (props: any) => {
 
         props.props.props.setCurrentWeather((prev: any) => ({
           ...prev,
-          current,
+          current: {
+            ...prev.current,
+            ...current,
+            name: nearestLocation,
+            sunsetTime: daily[0].sunset
+          },
         }));
+        
 
         props.props.props.setHourlyWeather(hourly);
 
@@ -75,7 +94,7 @@ const PlacesAutocomplete = (props: any) => {
     }
   };
 
-  const parseCurrentWeather = ({ current_weather, daily }: any) => {
+  const parseCurrentWeather = ({ current_weather, daily, latitude, longitude }: any) => {
     const { temperature: currentTemp } = current_weather;
 
     const {
@@ -87,20 +106,28 @@ const PlacesAutocomplete = (props: any) => {
       currentTemp: Math.round(currentTemp),
       highTemp: Math.round(highTemp),
       lowTemp: Math.round(lowTemp),
+      lat: latitude,
+      lon: longitude,
+      icon: current_weather.weathercode
     };
   };
 
   const parseHourlyWeather = ({ hourly, current_weather }: any) => {
-    return hourly.time.map((time: number, index: number) => {
-      return {
-        idx: index,
-        timestamp: time * 1000,
-        hour: HOUR_FORMATTER.format(time * 1000),
-        temp: Math.round(hourly.temperature_2m[index]),
-        precip: Math.round(hourly.precipitation[index] * 100) / 100,
-        icon: hourly.weathercode[index]
-      }
-    }).filter(({ timestamp, idx }: any) => timestamp >= current_weather.time * 1000 && idx <= 36)
+    return hourly.time
+      .map((time: number, index: number) => {
+        return {
+          idx: index,
+          timestamp: time * 1000,
+          hour: HOUR_FORMATTER.format(time * 1000),
+          temp: Math.round(hourly.temperature_2m[index]),
+          precip: Math.round(hourly.precipitation[index] * 100) / 100,
+          icon: hourly.weathercode[index],
+        };
+      })
+      .filter(
+        ({ timestamp, idx }: any) =>
+          timestamp >= current_weather.time * 1000 && idx <= 36
+      );
   };
 
   const parseDailyWeather = ({ daily }: any) => {
@@ -111,10 +138,10 @@ const PlacesAutocomplete = (props: any) => {
         high: Math.round(daily.temperature_2m_max[index]),
         low: Math.round(daily.temperature_2m_min[index]),
         sunrise: HOUR_FORMATTER.format(daily.sunrise[index] * 1000),
-        sunset: HOUR_FORMATTER.format(daily.sunset[index] * 1000)
-      } 
-    })
-  }
+        sunset: HOUR_FORMATTER.format(daily.sunset[index] * 1000),
+      };
+    });
+  };
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: weatherApiKey,
@@ -128,11 +155,11 @@ const PlacesAutocomplete = (props: any) => {
   }, [isLoaded]);
 
   if (loadError) {
-    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />;
   }
 
   if (!isScriptLoaded) {
-    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />;
   }
 
   return (
@@ -159,11 +186,11 @@ const PlacesAutocompleteContainer = (props: any) => {
     });
 
   if (scriptLoadError) {
-    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />;
   }
 
   if (!isScriptLoaded) {
-    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />
+    return <Skeleton variant="text" className="rounded-2xl bg-sky-800 h-12" />;
   }
 
   return <PlacesAutocomplete props={props} />;

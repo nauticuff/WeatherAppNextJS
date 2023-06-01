@@ -31,7 +31,7 @@ export default function Home() {
       description: "Sunny",
       icon: "04d",
       currentTemp: 75,
-      today: "Mon",
+      
       highTemp: 90,
       lowTemp: 55,
       name: "Stockton",

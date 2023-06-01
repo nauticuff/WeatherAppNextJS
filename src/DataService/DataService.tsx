@@ -8,6 +8,12 @@ const getWeather = async (lat: number, lon: number, timezone: string) => {
     return data
 }
 
-export { getWeather }
+const getLocation = async (lat: number, lon: number, apiKey: string) => {
+    const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=${lat},${lon}&no_annotations=1&components=city,town,village`)
+    const data = await res.json();
+    return data
+}
+
+export { getWeather, getLocation }
 
 //getWeather(10, 10, currentTimezone)

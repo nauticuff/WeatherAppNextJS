@@ -18,6 +18,8 @@ const CurrentWeather = (props: any) => {
   //   setAnchorEl(null);
   // };
 
+  console.log(props.currentWeather)
+
   return (
     <div className="my-10 text-center text-white">
       <div className="current-top">
