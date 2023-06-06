@@ -35,36 +35,18 @@ interface DailyModel {
 }
 
 export default function Home() {
-  const [currentWeather, setCurrentWeather] = useState({
-    current: {
-      description: "Sunny",
-      icon: "04d",
-      currentTemp: 75,
-      highTemp: 90,
-      lowTemp: 55,
-      name: "Stockton",
-      sunsetTime: 1679537879,
-      lat: 10,
-      lon: 20,
-    },
+  const [currentWeather, setCurrentWeather] = useState<CurrentModel>({
+    currentTemp: 0,
+    highTemp: 0,
+    icon: 0,
+    lat: 0,
+    lon: 0,
+    lowTemp: 0,
+    name: '',
   });
-
-  const [hourlyWeather, setHourlyWeather] = useState<HourlyModel[]>([])
-
-  // const [dailyWeather, setDailyWeather] = useState(
-  //   [
-  //     { day: ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
-  //     { icon: [65, 62, 70, 59, 60, 63] },
-  //     { high: [65, 62, 70, 59, 60, 63] },
-  //     { low: [57, 55, 45, 49, 50, 52] },
-  //     {
-  //       sunrise: ["Sunny", "Overcast", "Cloudy", "Rainy", "Sunny", "Snow"],
-  //     },
-  //     { sunset: ["Sunny", "Overcast", "Cloudy", "Rainy", "Sunny", "Snow"] },
-  //   ]
-  // );
-
-  const [dailyWeather, setDailyWeather] = useState<DailyModel[]>([])
+  const [hourlyWeather, setHourlyWeather] = useState<HourlyModel[]>([]);
+  const [dailyWeather, setDailyWeather] = useState<DailyModel[]>([]);
+  const [isFetchStarted, setIsFetchStarted] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,15 +57,16 @@ export default function Home() {
               setCurrentWeather={setCurrentWeather}
               setHourlyWeather={setHourlyWeather}
               setDailyWeather={setDailyWeather}
+              setIsFetchStarted={setIsFetchStarted}
             />
             <div className="flex flex-col gap-6">
               <div className="bg-[#386894] rounded-lg px-6">
-                <CurrentWeather currentWeather={currentWeather} />
+                <CurrentWeather currentWeather={currentWeather} isFetchStarted={isFetchStarted}/>
                 <CurrentButtons />
                 <hr className="mx-auto my-4 w-[96%]"/>
-                <HourlyWeather hourlyWeather={hourlyWeather}/>
+                <HourlyWeather hourlyWeather={hourlyWeather} isFetchStarted={isFetchStarted}/>
               </div>
-              <DailyWeather dailyWeather={dailyWeather} />
+              <DailyWeather dailyWeather={dailyWeather} isFetchStarted={isFetchStarted}/>
             </div>
           </div>
         </div>

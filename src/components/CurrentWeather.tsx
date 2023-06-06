@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Skeleton } from "@mui/material";
 import Button from "@mui/material/Button";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
@@ -7,32 +8,66 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import HourlyWeather from "./HourlyWeather/HourlyWeather";
 
-const CurrentWeather = (props: any) => {
-  // const [isFavorited, setIsFavorited] = useState(false);
-  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+interface CurrentWeatherModel {
+  currentTemp: number;
+  highTemp: number;
+  icon: number;
+  lat: number;
+  lon: number;
+  lowTemp: number;
+  name: string;
+}
 
-  console.log(props.currentWeather)
+interface CurrentWeatherProps {
+  currentWeather: CurrentWeatherModel;
+  isFetchStarted: boolean
+}
+
+const CurrentWeather: React.FC<CurrentWeatherProps> = ({ currentWeather, isFetchStarted }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (isFetchStarted) {
+      setIsLoading(true); // Set isLoading to true when isFetchStarted changes
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000); // Simulating a 2-second delay
+    }
+  }, [isFetchStarted]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Simulating a 2-second delay
+  }, [])
 
   return (
     <div className="my-10 text-center text-white">
-      <div className="current-top">
-        <p className="font-light">{props.currentWeather.current.name}</p>
-        <h1 className="text-3xl">
-          {props.currentWeather.current.currentTemp}&deg; F
-        </h1>
-        <p className="font-light">{props.currentWeather.current.description}</p>
+      {isLoading ? (
+        <div className="flex justify-center items-center flex-col">
+          <Skeleton variant="text" width={100} sx={{ fontSize: '1rem' }} />          
+          <Skeleton variant="text" width={50} sx={{ fontSize: '1.875rem'}}/>
+          <Skeleton variant="text" width={100} sx={{ fontSize: '1rem' }} />          
+          <Skeleton variant="text" width={100} sx={{ fontSize: '1rem' }} />          
+        </div>
+      ) : (
+        <div>
+          <p className="font-light">{currentWeather.name}</p>
+          <h1 className="text-3xl">{currentWeather.currentTemp}&deg; F</h1>
+          <p className="font-light">{currentWeather.icon}</p>
+          <p className="font-light">
+            H: {currentWeather.highTemp}&deg; L: {currentWeather.lowTemp}&deg;
+          </p>
+        </div>
+      )}
+      {/* <div className="current-top">
+        <p className="font-light">{currentWeather.name}</p>
+        <h1 className="text-3xl">{currentWeather.currentTemp}&deg; F</h1>
+        <p className="font-light">{currentWeather.icon}</p>
         <p className="font-light">
-          H: {props.currentWeather.current.highTemp}&deg; L:{" "}
-          {props.currentWeather.current.lowTemp}&deg;
+          H: {currentWeather.highTemp}&deg; L: {currentWeather.lowTemp}&deg;
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

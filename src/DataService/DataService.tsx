@@ -14,6 +14,12 @@ const getLocation = async (lat: number, lon: number, apiKey: string) => {
     return data
 }
 
+const getCoords = async (location: string, apiKey: string) => {
+    const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}`);
+    const data = await res.json()
+    return data
+}
+
 const getRandomCoords = async () => {
     try {
         const res = await fetch('https://api.3geonames.org/?randomland=yes&json=1')
@@ -27,6 +33,6 @@ const getRandomCoords = async () => {
     }
 }
 
-export { getWeather, getLocation, getRandomCoords }
+export { getWeather, getLocation, getRandomCoords, getCoords }
 
 //getWeather(10, 10, currentTimezone)
