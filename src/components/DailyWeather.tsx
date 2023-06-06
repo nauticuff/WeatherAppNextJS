@@ -47,7 +47,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
       <div className="text-white">
         {isLoading ? (
           dailyCount.map((count) => (
-            <React.Fragment>
+            <React.Fragment key={count}>
 
                 <hr />
             <div className="grid grid-cols-4 py-4 gap-2 font-light items-center">
