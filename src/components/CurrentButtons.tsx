@@ -1,31 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import {
+  getFavoritedLocations,
+  saveLocation,
+  deleteLocation,
+} from "@/DataService/DataService";
+import { json } from "stream/consumers";
+interface CurrentWeatherModel {
+  currentTemp: number;
+  highTemp: number;
+  icon: number;
+  lat: number;
+  lon: number;
+  lowTemp: number;
+  name: string;
+}
 
-const CurrentButtons = () => {
+interface PlaceModel {
+  name: string;
+  lat: number;
+  lon: number;
+}
+interface CurrentButtonsProps {
+  currentWeather: CurrentWeatherModel;
+  fetchLocation: (lat: number, lon: number) => void;
+}
+const CurrentButtons: React.FC<CurrentButtonsProps> = ({ currentWeather, fetchLocation }) => {
   const [isFavorited, setIsFavorited] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleClose =() => {
     setAnchorEl(null);
+  }
+  const handleFavoritedSelection = (lat: number, lon: number) => {
+    fetchLocation(lat, lon)
+  };  
+
+  const handleFavoriteButton = () => {
+    if (!isFavorited) {
+      saveLocation(currentWeather.name, currentWeather.lat, currentWeather.lon);
+      setIsFavorited(!isFavorited);
+    } else {
+      deleteLocation(currentWeather.name);
+      setIsFavorited(!isFavorited);
+    }
   };
+
+  const FavoritedLocations: PlaceModel[] = getFavoritedLocations();
+
+  useEffect(() => {
+    const isLocationFavorited = FavoritedLocations.some(
+      (place) => place.name === currentWeather.name
+    );
+    setIsFavorited(isLocationFavorited);
+  }, [currentWeather.name, FavoritedLocations]);
 
   return (
     <div className="flex justify-center flex-wrap gap-4 col text-white sm:justify-around">
       <Button
-        onClick={() => setIsFavorited(!isFavorited)}
+        onClick={handleFavoriteButton}
         variant="contained"
         className="w-[170px] bg-[#23405c] rounded-full text-inherit tracking-wider hover:bg-slate-200 hover:text-black"
       >
-        <span className="px-1">{isFavorited ? "favorite" : "unfavorite"}</span>
-        {isFavorited ? <StarBorderRoundedIcon /> : <StarRoundedIcon />}
+        <span className="px-1">{isFavorited ? "unfavorite" : "favorite"}</span>
+        {isFavorited ? <StarRoundedIcon /> : <StarBorderRoundedIcon />}
       </Button>
       <Button
         id="basic-button"
@@ -48,9 +95,11 @@ const CurrentButtons = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Paris</MenuItem>
-        <MenuItem onClick={handleClose}>London</MenuItem>
-        <MenuItem onClick={handleClose}>Rome</MenuItem>
+        {FavoritedLocations.map((place: PlaceModel) => (
+          <MenuItem key={place.name} onClick={() => {handleFavoritedSelection(place.lat, place.lon); handleClose}}>
+            {place.name}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );
