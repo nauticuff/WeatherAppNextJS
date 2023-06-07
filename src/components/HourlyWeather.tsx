@@ -42,10 +42,9 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
     <div className=" text-white font-light grid grid-flow-col overflow-x-scroll md:overflow-x-auto md:grid-flow-row md:px-1 md:h-[440px]">
       {isLoading
         ? skeletonCount.map((count) => (
-            <React.Fragment>
+            <React.Fragment key={count}>
               <hr className="hidden md:block" />
               <div
-                key={count}
                 className="mr-3 mb-4 w-16 grid place-items-center gap-1"
               >
                 <Skeleton variant="text" width={30} />
@@ -55,10 +54,9 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
             </React.Fragment>
           ))
         : hourlyWeather.map((row: HourlyModel, index: number) => (
-            <React.Fragment>
+            <React.Fragment key={row.timestamp}>
               <hr className="hidden md:block" />
               <div
-                key={row.timestamp}
                 className="mr-3 mb-4 w-16 grid place-items-center gap-1 md:grid-flow-col md:w-full md:m-0"
               >
                 {index === 0 ? <p>Now</p> : <p>{row.hour}</p>}
