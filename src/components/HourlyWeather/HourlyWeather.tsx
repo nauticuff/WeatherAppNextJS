@@ -38,10 +38,10 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
     }, 3000);
   }, []);
 
-  const skeletonCount = [1, 2];
+  const skeletonCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   return (
-    <div className="md:h-[500px] text-white font-light grid grid-flow-col overflow-x-scroll md:overflow-x-auto md:grid-flow-row md:px-1">
+    <div className=" text-white font-light grid grid-flow-col overflow-x-scroll md:overflow-x-auto md:grid-flow-row md:px-1 md:h-[440px]">
       {isLoading
         ? skeletonCount.map((count) => (
             <React.Fragment>

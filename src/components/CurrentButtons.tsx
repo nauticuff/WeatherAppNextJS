@@ -59,7 +59,6 @@ const CurrentButtons: React.FC<CurrentButtonsProps> = ({
   };
 
   const FavoritedLocations: PlaceModel[] = getFavoritedLocations();
-  console.log(FavoritedLocations)
 
   useEffect(() => {
     const isLocationFavorited = FavoritedLocations.some(

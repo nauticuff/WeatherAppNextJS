@@ -82,8 +82,8 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider>
-        <div className="bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-16 px-4">
-          <div className="max-w-6xl mx-auto">
+        <div className="bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-16 min-h-[100vh] px-4 md:grid md:grid-flow-row md:place-items-center">
+          <div className="">
             <Nav
               setCurrentWeather={setCurrentWeather}
               setHourlyWeather={setHourlyWeather}
@@ -92,7 +92,7 @@ export default function Home() {
               handlePlaceSelect={handlePlaceSelect}
             />
             <div className="flex flex-col gap-6 md:flex-row md:gap-3 h-full">
-              <div className="bg-[#386894] rounded-lg px-6 md:px-1 md:w-1/2">
+              <div className="bg-[#386894] rounded-lg px-6 pb-1 md:pb-0 md:px-1 md:w-1/2">
                 <CurrentWeather currentWeather={currentWeather} isFetchStarted={isFetchStarted}/>
                 <CurrentButtons currentWeather={currentWeather} fetchLocation={handlePlaceSelect}/>
                 <hr className="mx-auto my-4 w-[96%] md:hidden"/>
