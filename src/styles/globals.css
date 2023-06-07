@@ -3,27 +3,26 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Poppins', 'Roboto', sans-serif !important
+  font-family: "Poppins", "Roboto", sans-serif !important;
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
-    border-radius: 100vw;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #5778a6;
-    border-radius: 100vw;
-    border: .1rem solid #c5d8e8;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    
-    background: #6c8ebf;  
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #a4cbeb; 
-    border-radius: 100vw;
-    margin-block: .5rem;
-  }
+  width: 12px;
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5778a6;
+  border-radius: 100vw;
+  border: 0.1rem solid #c5d8e8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6c8ebf;
+}
+
+::-webkit-scrollbar-track {
+  background: #a4cbeb;
+  border-radius: 100vw;
+  margin-block: 0.5rem;
+}

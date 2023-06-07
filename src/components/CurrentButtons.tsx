@@ -98,7 +98,7 @@ const CurrentButtons: React.FC<CurrentButtonsProps> = ({
           "aria-labelledby": "basic-button",
         }}
       >
-        {FavoritedLocations.length === 0 ? 'Favorites will appear here' : ''}
+        {FavoritedLocations.length === 0 ? "Favorites will appear here" : ""}
         {FavoritedLocations.map((place: PlaceModel) => (
           <MenuItem
             key={place.name}

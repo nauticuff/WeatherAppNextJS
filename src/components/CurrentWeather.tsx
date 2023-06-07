@@ -13,41 +13,46 @@ interface CurrentWeatherModel {
 
 interface CurrentWeatherProps {
   currentWeather: CurrentWeatherModel;
-  isFetchStarted: boolean
+  isFetchStarted: boolean;
 }
 
-const CurrentWeather: React.FC<CurrentWeatherProps> = ({ currentWeather, isFetchStarted }) => {
+const CurrentWeather: React.FC<CurrentWeatherProps> = ({
+  currentWeather,
+  isFetchStarted,
+}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isFetchStarted) {
-      setIsLoading(true); 
+      setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000); 
+      }, 2000);
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // 
-  }, [])
+    }, 3000); //
+  }, []);
 
   return (
     <div className="my-10 text-white">
       {isLoading ? (
         <div className="flex justify-center items-center flex-col">
-          <Skeleton variant="text" width={100} sx={{ fontSize: '1rem' }} />          
-          <Skeleton variant="text" width={50} sx={{ fontSize: '1.875rem'}}/>
-          <Skeleton variant="text" width={100} sx={{ fontSize: '1rem' }} />          
-          <Skeleton variant="text" width={100} sx={{ fontSize: '1rem' }} />          
+          <Skeleton variant="text" width={100} sx={{ fontSize: "1rem" }} />
+          <Skeleton variant="text" width={50} sx={{ fontSize: "1.875rem" }} />
+          <Skeleton variant="text" width={100} sx={{ fontSize: "1rem" }} />
+          <Skeleton variant="text" width={100} sx={{ fontSize: "1rem" }} />
         </div>
       ) : (
         <div className="flex justify-center items-center flex-col">
           <p className="font-light">{currentWeather.name}</p>
           <h1 className="text-3xl">{currentWeather.currentTemp}&deg; F</h1>
-          <p className="font-light">{getWeatherDescription(currentWeather.icon)}</p>
+          <p className="font-light">
+            {getWeatherDescription(currentWeather.icon)}
+          </p>
           <p className="font-light">
             H: {currentWeather.highTemp}&deg; L: {currentWeather.lowTemp}&deg;
           </p>

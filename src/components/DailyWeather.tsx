@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ICON_MAP, getIconUrl } from "./HelperFunctions/IconMap";
 import { Skeleton } from "@mui/material";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 interface DailyModel {
   day: string;
   icon: number;
@@ -25,17 +25,17 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
 
   useEffect(() => {
     if (isFetchStarted) {
-      setIsLoading(true); 
+      setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000); 
+      }, 2000);
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); 
+    }, 3000);
   }, []);
 
   const dailyCount = [1, 2, 3, 4, 5, 6, 7];

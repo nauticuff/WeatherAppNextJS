@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styles from "./hourlyweather.module.css";
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { Skeleton } from "@mui/material";
-import { ICON_MAP, getIconUrl } from "../HelperFunctions/IconMap";
+import { ICON_MAP, getIconUrl } from "./HelperFunctions/IconMap";
 import Image from "next/image";
-import Clear from "../../../public/clear.svg";
+
 interface HourlyModel {
   hour: string;
   icon: number;

@@ -7,7 +7,6 @@ import {
 import {
   getWeather,
   getLocation,
-  getRandomCoords,
   getCoords,
 } from "@/DataService/DataService";
 import { ObjectLiteralElement } from "typescript";
@@ -51,7 +50,7 @@ const PlacesAutocomplete = (props: any) => {
       const realCoords = await getCoords(realLocation, geolocationApiKey);
       const lat = realCoords.results[0].geometry.lat;
       const lon = realCoords.results[0].geometry.lng;
-      props.props.props.handlePlaceSelect(lat, lon)
+      props.props.props.handlePlaceSelect(lat, lon);
     };
 
     exampleCoords();
