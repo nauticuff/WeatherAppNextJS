@@ -86,7 +86,7 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider>
-        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] py-8 px-6 overflow-y-scroll">
+        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] py-8 px-4 overflow-y-scroll">
           <div className="max-w-6xl mx-auto">
             <Nav
               setCurrentWeather={setCurrentWeather}
@@ -106,7 +106,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* Test */}
       </StyledEngineProvider>
     </ThemeProvider>
   );

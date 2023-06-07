@@ -13,4 +13,8 @@ addMapping([61, 63, 65, 66, 67, 80, 81, 82], "rain")
 addMapping([71, 73, 75, 77, 85, 86], "snow")
 addMapping([95, 96, 99], "thunder")
 
-export { ICON_MAP };
+const getIconUrl = (iconCode: number) => {
+    return `../../../${ICON_MAP.get(iconCode)}.svg`
+}
+
+export { ICON_MAP, getIconUrl };

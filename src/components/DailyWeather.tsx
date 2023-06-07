@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import { Skeleton } from "@mui/material";
-
+import { ICON_MAP, getIconUrl } from "./HelperFunctions/IconMap";
 interface DailyModel {
   day: string;
   icon: number;
@@ -36,7 +37,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
     }, 3000); // Simulating a 2-second delay
   }, []);
 
-  const dailyCount = [1, 2, 3, 4 , 5, 6, 7, 8, 9, 10, 11]
+  const dailyCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   return (
     <div className="bg-[#386894] px-6 rounded-lg">
@@ -45,39 +46,42 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
         <p className="sm">5-Day Forecast</p>
       </div>
       <div className="text-white">
-        {isLoading ? (
-          dailyCount.map((count) => (
-            <React.Fragment key={count}>
-
+        {isLoading
+          ? dailyCount.map((count) => (
+              <React.Fragment key={count}>
                 <hr />
-            <div className="grid grid-cols-4 py-4 gap-2 font-light items-center">
-                <Skeleton width={40}/>
-                <Skeleton variant="circular" width={20} height={20}/>
-                <Skeleton width={60}/>
-                <Skeleton width={50}/>
-            </div>
-            </React.Fragment>
-          ))
-        ) : (
-          dailyWeather.map((day: DailyModel, index: any) => (
-            <div key={day.day}>
-              <hr />
-              <div className="grid grid-cols-4 py-4 gap-2 font-light items-center">
-                <p>{index === 0 ? "Today" : day.day}</p>
-                <p>{day.icon}</p>
-                <p className="text-sm">
-                  <span className="text-lg font-normal">{day.high}&deg;</span>/
-                  {day.low}&deg;
-                </p>
-                {/* <p>{day.low}</p> */}
-                <p>
-                  <WaterDropIcon className="mr-1" />
-                  {day.precip}%
-                </p>
+                <div className="flex justify-between py-4 gap-2 font-light items-center">
+                  <Skeleton width={40} />
+                  <Skeleton variant="circular" width={30} height={30} />
+                  <Skeleton width={60} />
+                  <Skeleton width={50} />
+                </div>
+              </React.Fragment>
+            ))
+          : dailyWeather.map((day: DailyModel, index: any) => (
+              <div key={day.day}>
+                <hr />
+                <div className="grid grid-cols-4 py-4 gap-2 font-light items-center">
+                  <p>{index === 0 ? "Today" : day.day}</p>
+                  <div className="flex justify-center">
+                    <Image
+                      alt={`${ICON_MAP.get(day.icon)} weather icon`}
+                      src={getIconUrl(day.icon)}
+                      width={65}
+                      height={65}
+                    ></Image>
+                  </div>
+                  <p className="text-sm text-center">
+                    <span className="text-lg font-normal">{day.high}&deg;</span>
+                    /<span>{day.low}&deg;</span>
+                  </p>
+                  <div className="flex items-center justify-end">
+                    <p className="mr-2">{day.precip}%</p>
+                    <WaterDropIcon />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))
-        )}
+            ))}
       </div>
     </div>
   );
