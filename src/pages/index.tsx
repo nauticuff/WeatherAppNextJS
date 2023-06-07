@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider>
-        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-16 px-4 overflow-y-scroll">
+        <div className="bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-16 px-4">
           <div className="max-w-6xl mx-auto">
             <Nav
               setCurrentWeather={setCurrentWeather}
@@ -91,11 +91,11 @@ export default function Home() {
               setIsFetchStarted={setIsFetchStarted}
               handlePlaceSelect={handlePlaceSelect}
             />
-            <div className="flex flex-col gap-6">
-              <div className="bg-[#386894] rounded-lg px-6">
+            <div className="flex flex-col gap-6 md:flex-row md:gap-3 h-full">
+              <div className="bg-[#386894] rounded-lg px-6 md:px-1 md:w-1/2">
                 <CurrentWeather currentWeather={currentWeather} isFetchStarted={isFetchStarted}/>
                 <CurrentButtons currentWeather={currentWeather} fetchLocation={handlePlaceSelect}/>
-                <hr className="mx-auto my-4 w-[96%]"/>
+                <hr className="mx-auto my-4 w-[96%] md:hidden"/>
                 <HourlyWeather hourlyWeather={hourlyWeather} isFetchStarted={isFetchStarted}/>
               </div>
               <DailyWeather dailyWeather={dailyWeather} isFetchStarted={isFetchStarted}/>

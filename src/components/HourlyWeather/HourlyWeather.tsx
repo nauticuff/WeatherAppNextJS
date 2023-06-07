@@ -4,7 +4,7 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { Skeleton } from "@mui/material";
 import { ICON_MAP, getIconUrl } from "../HelperFunctions/IconMap";
 import Image from "next/image";
-import Clear from '../../../public/clear.svg'
+import Clear from "../../../public/clear.svg";
 interface HourlyModel {
   hour: string;
   icon: number;
@@ -25,10 +25,10 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
 
   useEffect(() => {
     if (isFetchStarted) {
-      setIsLoading(true); 
+      setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000); 
+      }, 2000);
     }
   }, [isFetchStarted]);
 
@@ -38,30 +38,42 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
     }, 3000);
   }, []);
 
-  const skeletonCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const skeletonCount = [1, 2];
 
   return (
-    <div className="text-white font-light grid grid-flow-col overflow-x-scroll">
-      {isLoading ? (
-          skeletonCount.map((count) => (
-            <div key={count} className="mr-3 mb-4 w-16 grid place-items-center gap-1">
-              <Skeleton variant="text" width={30} />
-              <Skeleton variant="circular" width={20} height={20} />
-              <Skeleton variant="text" width={30} />
-            </div>
+    <div className="md:h-[500px] text-white font-light grid grid-flow-col overflow-x-scroll md:overflow-x-auto md:grid-flow-row md:px-1">
+      {isLoading
+        ? skeletonCount.map((count) => (
+            <React.Fragment>
+              <hr className="hidden md:block" />
+              <div
+                key={count}
+                className="mr-3 mb-4 w-16 grid place-items-center gap-1"
+              >
+                <Skeleton variant="text" width={30} />
+                <Skeleton variant="circular" width={20} height={20} />
+                <Skeleton variant="text" width={30} />
+              </div>
+            </React.Fragment>
           ))
-      ) : (
-        hourlyWeather.map((row: HourlyModel, index: number) => (
-          <div
-            key={row.timestamp}
-            className="mr-3 mb-4 w-16 grid place-items-center gap-1"
-          >
-            {index === 0 ? <p>Now</p> : <p>{row.hour}</p>}
-            <Image alt={`${ICON_MAP.get(row.icon)} weather icon`} src={getIconUrl(row.icon)} width={55} height={55}></Image>
-            <p>{row.temp}&deg; F</p>
-          </div>
-        ))
-      )}
+        : hourlyWeather.map((row: HourlyModel, index: number) => (
+            <React.Fragment>
+              <hr className="hidden md:block" />
+              <div
+                key={row.timestamp}
+                className="mr-3 mb-4 w-16 grid place-items-center gap-1 md:grid-flow-col md:w-full md:m-0"
+              >
+                {index === 0 ? <p>Now</p> : <p>{row.hour}</p>}
+                <Image
+                  alt={`${ICON_MAP.get(row.icon)} weather icon`}
+                  src={getIconUrl(row.icon)}
+                  width={55}
+                  height={55}
+                ></Image>
+                <p>{row.temp}&deg; F</p>
+              </div>
+            </React.Fragment>
+          ))}
     </div>
   );
 };

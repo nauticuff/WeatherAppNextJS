@@ -69,7 +69,7 @@ const CurrentButtons: React.FC<CurrentButtonsProps> = ({
   }, [currentWeather.name, FavoritedLocations]);
 
   return (
-    <div className="flex justify-center flex-wrap gap-4 col text-white sm:justify-around">
+    <div className="flex justify-center flex-wrap gap-4 col text-white sm:justify-around md:mb-4">
       <Button
         onClick={handleFavoriteButton}
         variant="contained"

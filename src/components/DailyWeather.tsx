@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import { Skeleton } from "@mui/material";
 import { ICON_MAP, getIconUrl } from "./HelperFunctions/IconMap";
+import { Skeleton } from "@mui/material";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 interface DailyModel {
   day: string;
   icon: number;
@@ -40,10 +41,10 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
   const dailyCount = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <div className="bg-[#386894] px-6 rounded-lg">
+    <div className="bg-[#386894] px-6 rounded-lg md:w-1/2 md:px-4">
       <div className="flex items-center gap-8 text-gray-300 font-light text-sm py-4">
-        <p>ICON</p>
-        <p className="sm">5-Day Forecast</p>
+        <CalendarMonthIcon />
+        <p className="sm">7-Day Forecast</p>
       </div>
       <div className="text-white">
         {isLoading
