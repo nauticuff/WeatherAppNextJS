@@ -1,6 +1,3 @@
-// const weatherURL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,precipitation,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=${timezone}`
-
-//const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 interface PlaceModel {
     name: string;
@@ -24,19 +21,6 @@ const getCoords = async (location: string, apiKey: string) => {
     const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}`);
     const data = await res.json()
     return data
-}
-
-const getRandomCoords = async () => {
-    try {
-        const res = await fetch('https://api.3geonames.org/?randomland=yes&json=1')
-        const data = await res.json();
-        return data
-    }
-    catch (error) {
-        // Handle any errors that occurred during the fetch
-        console.error('Error fetching random coordinates:', error);
-        throw error; // Optional: Throw the error to be caught by the caller
-    }
 }
 
 const getFavoritedLocations = () => {
@@ -78,5 +62,5 @@ const getFavoritedLocations = () => {
   };
   
 
-export { getWeather, getLocation, getRandomCoords, getCoords, getFavoritedLocations, saveLocation, deleteLocation }
+export { getWeather, getLocation, getCoords, getFavoritedLocations, saveLocation, deleteLocation }
 

@@ -30,7 +30,10 @@ interface CurrentButtonsProps {
   currentWeather: CurrentWeatherModel;
   fetchLocation: (lat: number, lon: number) => void;
 }
-const CurrentButtons: React.FC<CurrentButtonsProps> = ({ currentWeather, fetchLocation }) => {
+const CurrentButtons: React.FC<CurrentButtonsProps> = ({
+  currentWeather,
+  fetchLocation,
+}) => {
   const [isFavorited, setIsFavorited] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -38,12 +41,12 @@ const CurrentButtons: React.FC<CurrentButtonsProps> = ({ currentWeather, fetchLo
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose =() => {
+  const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
   const handleFavoritedSelection = (lat: number, lon: number) => {
-    fetchLocation(lat, lon)
-  };  
+    fetchLocation(lat, lon);
+  };
 
   const handleFavoriteButton = () => {
     if (!isFavorited) {
@@ -56,6 +59,7 @@ const CurrentButtons: React.FC<CurrentButtonsProps> = ({ currentWeather, fetchLo
   };
 
   const FavoritedLocations: PlaceModel[] = getFavoritedLocations();
+  console.log(FavoritedLocations)
 
   useEffect(() => {
     const isLocationFavorited = FavoritedLocations.some(
@@ -95,8 +99,15 @@ const CurrentButtons: React.FC<CurrentButtonsProps> = ({ currentWeather, fetchLo
           "aria-labelledby": "basic-button",
         }}
       >
+        {FavoritedLocations.length === 0 ? 'Favorites will appear here' : ''}
         {FavoritedLocations.map((place: PlaceModel) => (
-          <MenuItem key={place.name} onClick={() => {handleFavoritedSelection(place.lat, place.lon); handleClose}}>
+          <MenuItem
+            key={place.name}
+            onClick={() => {
+              handleFavoritedSelection(place.lat, place.lon);
+              handleClose;
+            }}
+          >
             {place.name}
           </MenuItem>
         ))}

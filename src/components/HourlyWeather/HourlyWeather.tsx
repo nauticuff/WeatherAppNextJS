@@ -4,7 +4,6 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { Skeleton } from "@mui/material";
 import { ICON_MAP, getIconUrl } from "../HelperFunctions/IconMap";
 import Image from "next/image";
-import { clear } from "console";
 import Clear from '../../../public/clear.svg'
 interface HourlyModel {
   hour: string;
@@ -26,24 +25,20 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
 
   useEffect(() => {
     if (isFetchStarted) {
-      setIsLoading(true); // Set isLoading to true when isFetchStarted changes
+      setIsLoading(true); 
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000); // Simulating a 2-second delay
+      }, 2000); 
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Simulating a 2-second delay
+    }, 3000);
   }, []);
 
   const skeletonCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
-  // const getIconUrl = (iconCode: number) => {
-  //   return `../../../${ICON_MAP.get(iconCode)}.svg`
-  // }
 
   return (
     <div className="text-white font-light grid grid-flow-col overflow-x-scroll">

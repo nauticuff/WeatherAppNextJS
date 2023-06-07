@@ -55,8 +55,6 @@ export default function Home() {
 
   const handlePlaceSelect = async (lat: number, lon: number) => {
     //if (autocomplete !== null) {
-      console.log('Lat: ', lat)
-      console.log('Lon: ', lon)
       setIsFetchStarted(true)
       // const place = autocomplete.getPlace();
       // if (place.geometry && place.geometry.location) {
@@ -65,14 +63,12 @@ export default function Home() {
           lon,
           Intl.DateTimeFormat().resolvedOptions().timeZone
         );
-        console.log('Weather Data: ', weatherData)
 
         const locationData = await getLocation(
           lat, 
           lon,
           geolocationApiKey
         );
-        console.log(locationData)
 
         const current = parseCurrentWeather(weatherData, locationData);
         const hourly = parseHourlyWeather(weatherData);
@@ -86,7 +82,7 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider>
-        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] py-8 px-4 overflow-y-scroll">
+        <div className="h-screen bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-16 px-4 overflow-y-scroll">
           <div className="max-w-6xl mx-auto">
             <Nav
               setCurrentWeather={setCurrentWeather}

@@ -24,20 +24,20 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
 
   useEffect(() => {
     if (isFetchStarted) {
-      setIsLoading(true); // Set isLoading to true when isFetchStarted changes
+      setIsLoading(true); 
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000); // Simulating a 2-second delay
+      }, 2000); 
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Simulating a 2-second delay
+    }, 3000); 
   }, []);
 
-  const dailyCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const dailyCount = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     <div className="bg-[#386894] px-6 rounded-lg">
@@ -50,11 +50,11 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
           ? dailyCount.map((count) => (
               <React.Fragment key={count}>
                 <hr />
-                <div className="flex justify-between py-4 gap-2 font-light items-center">
-                  <Skeleton width={40} />
+                <div className="flex justify-between py-8 gap-2 font-light items-center">
+                  <Skeleton width={45} />
                   <Skeleton variant="circular" width={30} height={30} />
-                  <Skeleton width={60} />
-                  <Skeleton width={50} />
+                  <Skeleton width={65} />
+                  <Skeleton width={55} />
                 </div>
               </React.Fragment>
             ))
