@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./hourlyweather.module.css";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { Skeleton } from "@mui/material";
-
+import { ICON_MAP } from "../HelperFunctions/IconMap";
+import Image from "next/image";
 interface HourlyModel {
   hour: string;
   icon: number;
@@ -38,6 +39,9 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
 
   const skeletonCount = [1, 2, 3, 4, 5, 6];
 
+  const getIconUrl = (iconCode: number) => {
+    return `@public/${ICON_MAP.get(iconCode)}.svg`
+  }
   return (
     <div className="text-white font-light grid grid-flow-col overflow-x-scroll">
       {isLoading ? (
@@ -55,7 +59,7 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
             className="mr-3 mb-4 w-16 grid place-items-center gap-1"
           >
             {index === 0 ? <p>Now</p> : <p>{row.hour}</p>}
-            <WbSunnyIcon />
+            <Image alt="weather icon" src={`public/${ICON_MAP.get(row.icon)}.svg`} width={30} height={30}></Image>
             <p>{row.temp}&deg; F</p>
           </div>
         ))
