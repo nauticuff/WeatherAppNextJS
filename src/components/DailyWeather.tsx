@@ -33,7 +33,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // Simulating a 2-second delay
+    }, 3000); // Simulating a 2-second delay
   }, []);
 
   const dailyCount = [1, 2, 3, 4 , 5, 6, 7, 8, 9, 10, 11]
