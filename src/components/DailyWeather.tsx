@@ -28,7 +28,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 3000);
     }
   }, [isFetchStarted]);
 
@@ -51,7 +51,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
           ? dailyCount.map((count) => (
               <React.Fragment key={count}>
                 <hr />
-                <div className="flex justify-between py-8 gap-2 font-light items-center">
+                <div className="flex justify-between py-6 gap-2 font-light items-center">
                   <Skeleton width={45} />
                   <Skeleton variant="circular" width={30} height={30} />
                   <Skeleton width={65} />
@@ -62,7 +62,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
           : dailyWeather.map((day: DailyModel, index: any) => (
               <div key={day.day}>
                 <hr />
-                <div className="grid grid-cols-4 py-4 gap-2 font-light items-center">
+                <div className="grid grid-cols-4 py-2 gap-2 font-light items-center">
                   <p>{index === 0 ? "Today" : day.day}</p>
                   <div className="flex justify-center">
                     <Image

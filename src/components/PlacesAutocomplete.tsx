@@ -91,6 +91,7 @@ const PlacesAutocomplete = (props: any) => {
         }}
       >
         <input
+          name="location_query"
           type="text"
           placeholder="enter location"
           className="border-none w-44 focus:outline-dashed rounded-full px-3 text-center overflow-hidden bg-[#3c70a1] p-1 text-white placeholder:text-gray-300"

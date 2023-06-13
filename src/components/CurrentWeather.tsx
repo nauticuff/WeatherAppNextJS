@@ -27,7 +27,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 3000);
     }
   }, [isFetchStarted]);
 

@@ -16,7 +16,7 @@ const Nav = (props: any) => {
           alt="partly cloudy site logo"
           className="cursor-pointer"
           onClick={() => window.location.reload()}
-          priority
+          priority={true}
         ></Image>
       </Suspense>
       <PlacesAutocompleteContainer props={props} />

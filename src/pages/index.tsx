@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Nav from "@/components/nav";
+import Nav from "@/components/Nav";
 import CurrentWeather from "@/components/CurrentWeather";
 import HourlyWeather from "@/components/HourlyWeather";
 import DailyWeather from "@/components/DailyWeather";
@@ -79,8 +79,8 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider>
-        <div className="bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-16 min-h-[100vh] px-4 md:grid md:grid-flow-row md:place-items-center">
-          <div className="">
+        <div className="bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-2 min-h-[100vh] px-4 md:flex md:flex-row md:justify-center">
+          <div className="md:w-[1000px]">
             <Nav
               setCurrentWeather={setCurrentWeather}
               setHourlyWeather={setHourlyWeather}
@@ -88,7 +88,7 @@ export default function Home() {
               setIsFetchStarted={setIsFetchStarted}
               handlePlaceSelect={handlePlaceSelect}
             />
-            <div className="flex flex-col gap-6 md:flex-row md:gap-3 h-full">
+            <div className="flex flex-col gap-6 md:flex-row md:gap-3 ">
               <div className="bg-[#386894] rounded-lg px-6 pb-1 md:pb-0 md:px-1 md:w-1/2">
                 <CurrentWeather
                   currentWeather={currentWeather}
