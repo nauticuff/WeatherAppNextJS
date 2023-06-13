@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Nav from "@/components/Nav";
+import WeatherNav from "@/components/WeatherNav";
 import CurrentWeather from "@/components/CurrentWeather";
 import HourlyWeather from "@/components/HourlyWeather";
 import DailyWeather from "@/components/DailyWeather";
@@ -81,7 +81,7 @@ export default function Home() {
       <StyledEngineProvider>
         <div className="bg-[linear-gradient(#2c97df,#a2b3c4)] pt-8 pb-2 min-h-[100vh] px-4 md:flex md:flex-row md:justify-center">
           <div className="md:w-[1000px]">
-            <Nav
+            <WeatherNav
               setCurrentWeather={setCurrentWeather}
               setHourlyWeather={setHourlyWeather}
               setDailyWeather={setDailyWeather}

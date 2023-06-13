@@ -1,9 +1,9 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense }  from "react";
 import Image from "next/image";
 import PlacesAutocompleteContainer from "./PlacesAutocomplete";
 import Skeleton from "@mui/material/Skeleton";
 
-const Nav = (props: any) => {
+const WeatherNav = (props: any) => {
   return (
     <nav className="flex mb-6 justify-between items-center">
       <Suspense
@@ -24,4 +24,4 @@ const Nav = (props: any) => {
   );
 };
 
-export default Nav;
+export default WeatherNav;
