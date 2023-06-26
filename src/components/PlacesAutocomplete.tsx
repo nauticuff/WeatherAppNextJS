@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
   useLoadScript,
-  Autocomplete,
-  LoadScript,
+  Autocomplete
 } from "@react-google-maps/api";
 import {
-  getWeather,
-  getLocation,
-  getCoords,
+  getCoords
 } from "@/DataService/DataService";
-import { ObjectLiteralElement } from "typescript";
-import SearchIcon from "@mui/icons-material/Search";
 import Skeleton from "@mui/material/Skeleton";
-import { Button } from "@mui/material";
-
+import SearchIcon from "@mui/icons-material/Search"
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 const libraries: (
   | "places"
   | "drawing"
@@ -21,28 +18,16 @@ const libraries: (
   | "localContext"
   | "visualization"
 )[] = ["places"];
+
 const weatherApiKey = process.env.WEATHER_API_KEY || "";
 const geolocationApiKey = process.env.GEOLOCATION_API_KEY || "";
 
-interface CurrentModel {
-  currentTemp: number;
-  highTemp: number;
-  lowTemp: number;
-}
-
-interface ForecastModel {
-  day: string[];
-  high: number[];
-  low: number[];
-}
-
 const PlacesAutocomplete = (props: any) => {
-  const [autocomplete, setAutocomplete] =
-    useState<google.maps.places.Autocomplete | null>(null);
-  const [coord, setCoord] = useState([0, 0]);
+  const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
   useEffect(() => {
+
     const exampleCoords = async () => {
       const timezoneIdx = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const timezoneWord = timezoneIdx.slice(timezoneIdx.indexOf("/") + 1);
@@ -76,7 +61,7 @@ const PlacesAutocomplete = (props: any) => {
   }
 
   return (
-    <div>
+    <div className="flex items-center">
       <Autocomplete
         onLoad={(autoComplete) => setAutocomplete(autoComplete)}
         onPlaceChanged={() => {
@@ -90,13 +75,15 @@ const PlacesAutocomplete = (props: any) => {
           }
         }}
       >
-        <input
+        
+          <input
           name="location_query"
           type="text"
-          placeholder="enter location"
-          className="border-none w-44 focus:outline-dashed rounded-full px-3 text-center overflow-hidden bg-[#3c70a1] p-1 text-white placeholder:text-gray-300"
-        />
+          placeholder="search..."
+          className="border-none py-1 w-44 outline-none rounded-l-full ml-1 pl-4 overflow-hidden bg-[#386894] text-white placeholder:text-gray-200"
+          /> 
       </Autocomplete>
+        <SearchIcon className="rounded-r-full w-10 h-8 py-1" sx={{color: "#efefef", background: "#386894"}}/>
     </div>
   );
 };

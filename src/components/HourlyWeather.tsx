@@ -26,14 +26,14 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000);
+      }, 2500);
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 2500);
   }, []);
 
   const skeletonCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -57,7 +57,7 @@ const HourlyWeather: React.FC<HourlyWeatherProps> = ({
             <React.Fragment key={row.timestamp}>
               <hr className="hidden md:block md:w-11/12 md:mx-auto" />
               <div
-                className="mr-3 mb-4 w-16 grid place-items-center gap-1 md:grid-flow-col md:w-full md:m-0"
+                className="mr-3 mb-4 w-16 grid place-items-center md:grid-cols-3 gap-1 md:grid-flow-col md:w-full md:m-0"
               >
                 {index === 0 ? <p>Now</p> : <p>{row.hour}</p>}
                 <Image

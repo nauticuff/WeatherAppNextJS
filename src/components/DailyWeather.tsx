@@ -28,14 +28,14 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000);
+      }, 2500);
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 2500);
   }, []);
 
   const dailyCount = [1, 2, 3, 4, 5, 6, 7];

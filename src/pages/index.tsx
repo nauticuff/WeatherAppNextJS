@@ -88,7 +88,7 @@ export default function Home() {
               setIsFetchStarted={setIsFetchStarted}
               handlePlaceSelect={handlePlaceSelect}
             />
-            <div className="flex flex-col gap-6 md:flex-row md:gap-3 ">
+            <div className="flex flex-col gap-6 mt-2 md:flex-row md:gap-3 ">
               <div className="bg-[#386894] rounded-lg px-6 pb-1 md:pb-0 md:px-1 md:w-1/2">
                 <CurrentWeather
                   currentWeather={currentWeather}

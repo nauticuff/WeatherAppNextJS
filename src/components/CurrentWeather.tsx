@@ -27,14 +27,14 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 3000);
+      }, 2500);
     }
   }, [isFetchStarted]);
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000); //
+    }, 2500); //
   }, []);
 
   return (
