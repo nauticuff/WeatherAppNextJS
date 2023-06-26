@@ -53,6 +53,8 @@ const WeatherNav = (props: any) => {
       handleSuccessSnack();
     } catch (error) {
       console.error(error);
+      setMessage("Failed to obtain data. Try again.");
+      handleFailSnack();
     }
   };
 
