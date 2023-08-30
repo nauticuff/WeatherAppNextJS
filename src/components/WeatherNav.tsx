@@ -49,12 +49,15 @@ const WeatherNav = (props: any) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       props.handlePlaceSelect(lat, lon);
-      setMessage("Successfully obtained weather information");
-      handleSuccessSnack();
+      
+      
     } catch (error) {
       console.error(error);
       setMessage("Failed to obtain data. Try again.");
       handleFailSnack();
+    } finally {
+      setMessage("Successfully obtained weather information");
+      handleSuccessSnack();
     }
   };
 
