@@ -1,75 +1,44 @@
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import PlacesAutocompleteContainer from "./PlacesAutocomplete";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
+import toast, { Toaster } from 'react-hot-toast'
 
 const WeatherNav = (props: any) => {
-  const [open, setOpen] = React.useState(false);
-  const [failOpen, setFailOpen] = React.useState(false);
-  const [message, setMessage] = useState("Snackbar here");
-
-  const handleSuccessSnack = () => {
-    setOpen(true);
-  };
-
-  const handleFailSnack = () => {
-    setFailOpen(true);
-  };
-
-  const handleSuccessClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const handleFailClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setFailOpen(false);
-  };
 
   const positionSuccess = (position: any) => {
     try {
-      //setHavePermission(true);
-
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       props.handlePlaceSelect(lat, lon);
-      
-      
+      console.log('This is try')
     } catch (error) {
       console.error(error);
-      setMessage("Failed to obtain data. Try again.");
-      handleFailSnack();
+      console.log('This is error')
+      toast.error('Something went wrong. Try again.')
     } finally {
-      setMessage("Successfully obtained weather information");
-      handleSuccessSnack();
+      toast.success('Successfully obtained weather information')
     }
   };
 
-  const positionError = () => {
-    setMessage("Please enable location to get weather forecast.");
-    handleFailSnack();
+  const positionError = (error: any) => {
+    if (error.code === error.PERMISSION_DENIED) {
+      toast.error('Location permission was revoked. Please enable location to get weather forecast.');
+    } else {
+      console.error('Geolocation error:', error);
+      toast.error('An error occurred while obtaining location.');
+    }
   };
+   
+  let positionWatcher: any;
 
   const handleCurrentPosition = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+    if (positionWatcher) {
+      navigator.geolocation.clearWatch(positionWatcher); // Clear previous watcher if exists
     }
+  
+    positionWatcher = navigator.geolocation.watchPosition(positionSuccess, positionError);
   };
 
   return (
@@ -97,34 +66,7 @@ const WeatherNav = (props: any) => {
           </IconButton>
         </Tooltip>
       </div>
-      <Snackbar
-      anchorOrigin={{ vertical: 'top', horizontal:'right' }}
-        open={failOpen}
-        autoHideDuration={2500}
-        onClose={handleFailClose}
-      >
-        <Alert
-          onClose={handleFailClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Please enable location to get weather forecast.
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal:'right' }}
-        open={open}
-        autoHideDuration={2500}
-        onClose={handleSuccessClose}
-      >
-        <Alert
-          onClose={handleSuccessClose}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          Successfully obtained weather data!
-        </Alert>
-      </Snackbar>
+      <Toaster />
     </>
   );
 };
