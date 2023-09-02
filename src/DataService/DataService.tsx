@@ -6,7 +6,7 @@ interface PlaceModel {
 
 const getWeather = async (lat: number, lon: number, timezone: string) => {
   const res = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,precipitation,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=${timezone}`
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,precipitation,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timeformat=unixtime&timezone=${timezone}`, { cache: 'no-store' }
   );
   const data = await res.json();
   return data;
@@ -14,7 +14,7 @@ const getWeather = async (lat: number, lon: number, timezone: string) => {
 
 const getLocation = async (lat: number, lon: number, apiKey: string) => {
   const res = await fetch(
-    `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=${lat},${lon}&no_annotations=1&components=city,town,village`
+    `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=${lat},${lon}&no_annotations=1&components=city,town,village`, { cache: 'no-store' }
   );
   const data = await res.json();
   return data;
@@ -22,7 +22,7 @@ const getLocation = async (lat: number, lon: number, apiKey: string) => {
 
 const getCoords = async (location: string, apiKey: string) => {
   const res = await fetch(
-    `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}`
+    `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${apiKey}`, { cache: 'no-store' }
   );
   const data = await res.json();
   return data;

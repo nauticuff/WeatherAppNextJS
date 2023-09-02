@@ -12,33 +12,22 @@ const WeatherNav = (props: any) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       props.handlePlaceSelect(lat, lon);
-      console.log('This is try')
     } catch (error) {
       console.error(error);
-      console.log('This is error')
       toast.error('Something went wrong. Try again.')
     } finally {
       toast.success('Successfully obtained weather information')
     }
   };
 
-  const positionError = (error: any) => {
-    if (error.code === error.PERMISSION_DENIED) {
-      toast.error('Location permission was revoked. Please enable location to get weather forecast.');
-    } else {
-      console.error('Geolocation error:', error);
-      toast.error('An error occurred while obtaining location.');
-    }
+  const positionError = () => {
+    toast.error('Please enable location to get weather forecast.')
   };
-   
-  let positionWatcher: any;
 
   const handleCurrentPosition = () => {
-    if (positionWatcher) {
-      navigator.geolocation.clearWatch(positionWatcher); // Clear previous watcher if exists
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
     }
-  
-    positionWatcher = navigator.geolocation.watchPosition(positionSuccess, positionError);
   };
 
   return (

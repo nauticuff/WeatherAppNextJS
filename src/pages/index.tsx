@@ -55,10 +55,7 @@ export default function Home() {
   const [isFetchStarted, setIsFetchStarted] = useState(false);
 
   const handlePlaceSelect = async (lat: number, lon: number) => {
-    //if (autocomplete !== null) {
     setIsFetchStarted(true);
-    // const place = autocomplete.getPlace();
-    // if (place.geometry && place.geometry.location) {
     const weatherData = await getWeather(
       lat,
       lon,
