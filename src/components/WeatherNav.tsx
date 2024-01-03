@@ -4,6 +4,7 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import toast, { Toaster } from 'react-hot-toast'
+import Link from "next/link";
 
 const WeatherNav = (props: any) => {
 
@@ -44,7 +45,8 @@ const WeatherNav = (props: any) => {
         ></Image>
         <PlacesAutocompleteContainer props={props} />
       </nav>
-      <div className="flex justify-end">
+      <div className="flex justify-end items-center space-x-4">
+        <Link href='/login' className="bg-[#386894] hover:bg-[#264969] transition-all px-2 py-1 rounded-md text-white">Login</Link>
         <Tooltip title="Get weather info">
           <IconButton onClick={handleCurrentPosition}>
             <MyLocationIcon

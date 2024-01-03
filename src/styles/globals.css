@@ -26,3 +26,10 @@ body {
   border-radius: 100vw;
   margin-block: 0.3rem;
 }
+
+.firewatch-bg {
+  background-image: url("https://i.pinimg.com/originals/9f/97/62/9f976266def3a52dca61a47f07ca11dd.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
